@@ -1,0 +1,23 @@
+clc
+clear all
+close all
+% Generation of SNR
+SNR_dB = -5:1:20;
+SNR_lin = 10.^(SNR_dB/10);
+% BER for AWGN channel (with BPSK modulation)
+BER_AWGN = qfunc(sqrt(SNR_lin));
+BER_AWGN_approx = (1/2)*exp(-SNR_lin/2);
+% BER for Rayleigh fading channel (with BPSK modulation)
+BER_Rayleigh = (1/2).*(1-sqrt(SNR_lin./(2+SNR_lin)));
+%plotting all BER against SNR(dB)
+figure
+semilogy(SNR_dB, BER_Rayleigh, 'm-x', 'LineWidth', 2);
+hold on;
+semilogy(SNR_dB, BER_AWGN, 'b-o', 'LineWidth', 2);
+semilogy(SNR_dB, BER_AWGN_approx, 'g--', 'LineWidth', 2);
+grid on;
+title('BER vs SNR for AWGN & Rayleigh Channels');
+xlabel('SNR (dB)');
+ylabel('Bit Error Rate (BER)');
+legend('Rayleigh Channel', 'AWGN Channel', 'Approximate BER for AWGN');
+axis([-5 20 10^-5 1]);

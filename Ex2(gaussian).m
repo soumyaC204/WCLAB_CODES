@@ -1,4 +1,4 @@
-1) Gaussian Random Variable: -
+
 clc
 clear all
 close all
